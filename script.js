@@ -1,96 +1,253 @@
 (function(){
-	var svg = d3.select("body")
-			.append("svg")
-			.attr("width", 600)
-			.attr("height", 420)
-			.attr("id", "running-zone");
 
-	var head = svg.append('circle')
-			.attr("cx", 60)
-			.attr("cy", 350)
-			.attr("r", 10)
-			.attr("stroke", "none")
-			.attr("id", "head");
+	var pathGenerator = d3.svg.line()
+		.x(function(d) { return d.x})
+		.y(function(d) { return d.y});
 
-	var body = svg.append('path')
-			.attr("d", "M 60 350 l 0 35")
-			.attr("fill", "none")
-			.attr("stroke-linecap", "round")
-			.attr("stroke-width", 4)
-			.attr("stroke", "#000")
-			.attr("id", "body");
-	var arms = svg.append('path')
-			.attr("d", "M 55 380 l 0 -10 5 -10 2 10 5 10")
-			.attr("fill", "none")
-			.attr("stroke-linecap", "round")
-			.attr("stroke-width", 4)
-			.attr("stroke", "red")
-			.attr("id", "arms");
-/*	var legs = svg.append('path')
-			.attr("d", "M 55 405 l 2 -10 3 -10 2 10 2 10")
-			.attr("fill", "none")
-			.attr("stroke-linecap", "round")
-			.attr("stroke-width", 4)
-			.attr("stroke", "#000")
-			.attr("id", "legs");*/
+	var runningZone = d3.select("body")
+		.append("svg")
+		.attr({
+			width: 600,
+			height: 400,
+			id: "running-zone"
+		});
 
-	var frames = {
-		rest: {
-			head: {
-				cx: 60,
-				cy: 350
-			},
-			body: {
-				d: ["M 60 350 l 0 35"]
-			},
-			arms: {
-				d: ["M 55 380 l 0 -10 5 -10 2 10 5 10"]
-			}
+	var playerContainer = runningZone.append("g")
+		.attr({
+			id: "player-container",
+			transform: "translate(70, 300)"
+		});
+
+	var armsContainer = playerContainer.append("g")
+		.attr({
+			id: "arms-container"
+		});
+
+	var legsContainer = playerContainer.append("g")
+		.attr({
+			id: "legs-container"
+		});
+
+	var playerProperties = {
+		head: {
+			r: 15
 		},
+		body: {
+			d: [
+				{x: 0, y: 0},
+                {x: 0, y: 20},
+				{x: 0, y: 40}
+			]
+		},
+		arms: {
+			left: {
+				d: [
+					{x: -1, y: 0},
+					{x: -2, y: 15},
+					{x: -4, y: 30}
+				]
+			},
+			right: {
+				d: [
+					{x: 1, y: 0},
+					{x: 2, y: 15},
+					{x: 4, y: 30}
+				]
+			},
+			transform: "translate(0, 15)"
+		},
+		legs: {
+			left: {
+				d: [
+					{x: 0, y:0},
+					{x: -2, y: 20},
+					{x: -4, y: 40}
+				]
+			},
+			right: {
+				d: [
+					{x: 0, y:0},
+					{x: 2, y: 20},
+					{x: 4, y: 40}
+				]
+			},
+			transform: "translate(0, 40)"
+		},
+		thickness: 6
+	};
+
+	var playerActionFrames = {
 		run: {
 			head: {
-				cx: 70,
-				cy: 355
+                transform: "translate(15, 10)"
 			},
 			body: {
-				d: ["M 65 355 l -5 20 0 15", "M 65 355 l -5 20 -2 15"]
+                d: [
+                    {x: 10, y: 20},
+                    {x: 5, y: 30},
+                    {x:-2, y: 50}
+                ]
 			},
 			arms: {
-				d: ["M 58 385 l 0 -10 5 -10 2 10 5 10",
-					"M 57 384 l -1 -11 7 -10 3 11 6 11",
-					"M 56 383 l -2 -10 9 -10 4 12 7 12"] //5 -10 2 10 5 10
+				left: {
+                    d: [
+                        {x: 5, y: 10},
+                        {x: -8, y: 15},
+                        {x: 0, y: 28}
+                    ],
+                    after: {
+                        transform: "translate(-2, 28) rotate(270)"
+                    },
+                    again: {
+                        transform: "translate(5,12)rotate(30)"
+                    }
+				},
+				right: {
+                    d: [
+                        {x: 8, y: 10},
+                        {x: 16, y: 25},
+                        {x: 25, y: 10}
+                    ]
+				}
+			},
+			legs: {
+				left: {
+
+				},
+				right: {
+
+				}
 			}
 		}
 	};
 
-	var actions = {
+	var player = {
+		head		: playerContainer.append("circle")
+			.attr({
+				id: "head",
+				r: playerProperties.head.r
+			}),
+
+		body		: playerContainer.append("path")
+			.data([playerProperties.body.d])
+			.attr({
+				d: pathGenerator,
+				"stroke-width": playerProperties.thickness,
+				"stroke": "#000000",
+				"fill" : "none",
+				"stroke-linecap": "round",
+				id: "body"
+			}),
+
+		leftArm		: armsContainer.append("path")
+			.data([playerProperties.arms.left.d])
+			.attr({
+				d: pathGenerator,
+				"stroke-width": playerProperties.thickness,
+				"stroke": "#000000",
+				"fill" : "none",
+				"stroke-linecap": "round",
+				"transform": playerProperties.arms.transform,
+				id: "left-arm"
+			})/*,
+
+
+		rightArm	: armsContainer.append("path")
+			.data([playerProperties.arms.right.d])
+			.attr({
+				d: pathGenerator,
+				"stroke-width": playerProperties.thickness,
+				"stroke": "#000000",
+				"fill" : "none",
+				"stroke-linecap": "round",
+				"transform": playerProperties.arms.transform,
+				id: "right-arm"
+			})*//*,
+
+		leftLeg		: legsContainer.append("path")
+			.data([playerProperties.legs.left.d])
+			.attr({
+				d: pathGenerator,
+				"stroke-width": playerProperties.thickness,
+				"stroke": "#000000",
+				"fill" : "none",
+				"stroke-linecap": "round",
+				"transform": playerProperties.legs.transform,
+				id: "left-leg"
+			})*//*,
+
+		rightLeg	:legsContainer.append("path")
+			.data([playerProperties.legs.right.d])
+			.attr({
+				d: pathGenerator,
+				"stroke-width": playerProperties.thickness,
+				"stroke": "#000000",
+				"fill" : "none",
+				"stroke-linecap": "round",
+				"transform": playerProperties.legs.transform,
+				id: "right-leg"
+			})*/
+	};
+
+	var playerActions = {
+		rest: function() {
+            var self = this;
+
+		},
 		run: function() {
-			var	bodyFrames = frames.run.body.d,
-				armsFrames = frames.run.arms.d,
-				bodyCtr = 0,
-				armsCtr = 0,
-				legsCtr = 0;
 
-			var run = setInterval(function() {
-				head.attr("cx", frames.run.head.cx);
-				head.attr("cy", frames.run.head.cy);
+            var repeat = function(el) {
+                if(el.attr("id") === "left-arm") {
+                    el.transition()
+                        .attr({
+                            transform: playerActionFrames.run.arms.left.after.transform
+                        })
+                        .transition()
+                        .attr({
+                            transform: playerActionFrames.run.arms.left.again.transform
+                        })
+                        .each("end", function() {
+                           repeat(el);
+                        });
+                }
+            };
 
-				if(bodyCtr < bodyFrames.length) {
-					body.attr("d", bodyFrames[bodyCtr]);
-					bodyCtr++;
-				}
+            player.head
+                .transition()
+                .attr({
+                   transform: playerActionFrames.run.head.transform
+                });
 
-				if(armsCtr < armsFrames.length) {
-					arms.attr("d", armsFrames[armsCtr]);
-					console.log(armsFrames[armsCtr])
-					armsCtr++;
+            player.body
+                .data([playerActionFrames.run.body.d])
+                .transition()
+                .attr({
+                    d: pathGenerator
+                });
 
-				}
-			}, 50);
+            player.leftArm
+                .data([playerActionFrames.run.arms.left.d])
+                .transition()
+                .attr({
+                    d: pathGenerator
+                })
+                .each("end", function() {
+                    repeat(player.leftArm);
+                });
 
+            /*player.rightArm
+                .data([playerActionFrames.run.arms.right.d])
+                .transition()
+                .attr({
+                   d: pathGenerator
+                });*/
 
 		}
-	}
-	actions.run();
-	
+	};
+
+	document.getElementsByTagName("body")[0].onkeydown = function(e) {
+		if(e.keyCode === 82) {
+			playerActions.run();
+		}
+	};
 })();
