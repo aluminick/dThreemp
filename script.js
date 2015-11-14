@@ -105,9 +105,15 @@
 				right: {
                     d: [
                         {x: 8, y: 10},
-                        {x: 16, y: 25},
+                        {x: 16, y: 20},
                         {x: 25, y: 10}
-                    ]
+                    ],
+					after: {
+						transform: "translate(20,20)rotate(120)"
+					},
+					again: {
+						transform: "translate(-2, 17) rotate(340)"
+					}
 				}
 			},
 			legs: {
@@ -149,7 +155,7 @@
 				"stroke-linecap": "round",
 				"transform": playerProperties.arms.transform,
 				id: "left-arm"
-			})/*,
+			}),
 
 
 		rightArm	: armsContainer.append("path")
@@ -162,7 +168,7 @@
 				"stroke-linecap": "round",
 				"transform": playerProperties.arms.transform,
 				id: "right-arm"
-			})*//*,
+			}),
 
 		leftLeg		: legsContainer.append("path")
 			.data([playerProperties.legs.left.d])
@@ -174,7 +180,7 @@
 				"stroke-linecap": "round",
 				"transform": playerProperties.legs.transform,
 				id: "left-leg"
-			})*//*,
+			}),
 
 		rightLeg	:legsContainer.append("path")
 			.data([playerProperties.legs.right.d])
@@ -186,7 +192,13 @@
 				"stroke-linecap": "round",
 				"transform": playerProperties.legs.transform,
 				id: "right-leg"
-			})*/
+			})
+	};
+
+	var actionControls = {
+		run: {
+			stop: true
+		}
 	};
 
 	var playerActions = {
@@ -207,9 +219,29 @@
                             transform: playerActionFrames.run.arms.left.again.transform
                         })
                         .each("end", function() {
-                           repeat(el);
+							if(actionControls.run.stop === true) {
+								return true;
+							}
+                           	repeat(el);
                         });
                 }
+
+				if(el.attr("id") === "right-arm") {
+					el.transition()
+						.attr({
+							transform: playerActionFrames.run.arms.right.after.transform
+						})
+						.transition()
+						.attr({
+							transform: playerActionFrames.run.arms.right.again.transform
+						})
+						.each("end", function() {
+							if(actionControls.run.stop === true) {
+								return true;
+							}
+							repeat(el);
+						});
+				}
             };
 
             player.head
@@ -235,19 +267,28 @@
                     repeat(player.leftArm);
                 });
 
-            /*player.rightArm
+            player.rightArm
                 .data([playerActionFrames.run.arms.right.d])
                 .transition()
                 .attr({
                    d: pathGenerator
-                });*/
+                })
+				.each("end", function() {
+					repeat(player.rightArm);
+				});
 
 		}
 	};
 
 	document.getElementsByTagName("body")[0].onkeydown = function(e) {
 		if(e.keyCode === 82) {
-			playerActions.run();
+			if(actionControls.run.stop === true) {
+				actionControls.run.stop = false;
+				playerActions.run();
+			}
+		}
+		if(e.keyCode === 69) {
+			actionControls.run.stop = true;
 		}
 	};
 })();
