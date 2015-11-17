@@ -15,7 +15,7 @@
     var headContainer = canvas.append("g")
             .attr({
                 id: "head-container",
-                transform: "translate("+ prop.getHead().cx +" , " + prop.getHead().cy + ")"
+                transform: "translate("+ prop.getHead().x +" , " + prop.getHead().y + ")"
             }),
         bodyContainer = canvas.append("g")
             .attr("id", "body-container"),

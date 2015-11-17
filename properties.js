@@ -6,8 +6,11 @@ var properties = (function() {
         head: {
             r: 15,
             id: "head",
-            cx: 60,
-            cy: 330
+            x: 60,
+            y: 330
+        },
+        body: {
+
         }
     };
 
