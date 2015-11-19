@@ -10,9 +10,6 @@
             id: prop.getCanvasId()
         });
 
-    /**
-     * player
-     */
     var player = {};
     player.container = canvas.append("g")
         .attr({
