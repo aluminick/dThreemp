@@ -1,85 +1,70 @@
-(function( prop, act ) {
+/**
+ * This is the entry point of the app
+ */
 
-    /**
-     * path generator
-     */
-
-    function generatePath() {
-        return d3.svg.line()
-            .x(function(d) {return d.x})
-            .y(function(d) {return d.y});
-    }
-
-    /**
-     * running zone
-     */
+(function(prop) {
     var canvas = d3.select("body").append("svg")
         .attr({
-            id: "running-zone",
-            width: 600,
-            height: 400
+            width: prop.getCanvasSize().width,
+            height: prop.getCanvasSize().height,
+            id: prop.getCanvasId()
         });
 
     /**
-     * player container
+     * player
      */
-    var playerContainer = canvas.append("g")
+    var player = {};
+    player.container = canvas.append("g")
         .attr({
-           id: "player-container"
+            id: prop.getPlayerContainer().id
+        });
+    //player head
+    player.container.headContainer = player.container.append("g")
+        .attr({
+            id: prop.getHeadContainer().id
+        });
+    player.container.headContainer.head = player.container.headContainer.append("circle")
+        .attr({
+            id: prop.getHead().id,
+            r: prop.getHead().r
         });
 
-    /**
-     * player parts
-     */
-    var player = {
-        head : playerContainer.append("circle")
-            .attr({
-                id: prop.getHead().id,
-                r: prop.getHead().r,
-                fill: prop.getHead().color,
-                transform: "translate("+ prop.getHead().x +" , " + prop.getHead().y + ")"
-            }),
-        body: playerContainer.append("path")
-            .data([prop.getBody().d])
-            .attr({
-                id: prop.getBody.id,
-                d: generatePath(),
-                "stroke": prop.getBody().color,
-                "stroke-width": prop.width(),
-                "stroke-linecap": prop.round(),
-                "fill": prop.fill()
-            }),
-        arms: playerContainer.append("path")
-            .data([prop.getArms().d])
-            .attr({
-                id: prop.getLegs().id,
-                d: generatePath(),
-                "stroke": prop.getArms().color,
-                "stroke-width": prop.width(),
-                "stroke-linecap": prop.round(),
-                "fill": prop.fill()
-            }),
-        legs: playerContainer.append("path")
-            .data([prop.getLegs().d])
-            .attr({
-                id: prop.getLegs().id,
-                d: generatePath(),
-                "stroke": prop.getLegs().color,
-                "stroke-width": prop.width(),
-                "stroke-linecap": prop.round(),
-                "fill": prop.fill()
-            })
-    };
+    //player body
+    player.container.bodyContainer = player.container.append("g")
+        .attr({
+            id: prop.getBodyContainer().id
+        });
+    player.container.bodyContainer.body = player.container.bodyContainer.append("path")
+        .attr({
+            id: prop.getBody().id
+        });
 
-    d3.select("body").on("keydown", function() {
-        if(d3.event.keyCode === 82) {
-            act.run(player, true)
-        }
-        if(d3.event.keyCode === 83) {
-            act.run(player, false)
-        }
-    })
+    //player arms
+    player.container.armsContainer = player.container.append("g")
+        .attr({
+            id: prop.getArmsContainer().id
+        });
+    player.container.armsContainer.left = player.container.armsContainer.append("path")
+        .attr({
+            id: prop.getArms().left.id
+        });
+    player.container.armsContainer.right = player.container.armsContainer.append("path")
+        .attr({
+            id: prop.getArms().right.id
+        });
 
+    //player legs
+    player.container.legsContainer = player.container.append("g")
+        .attr({
+            id: prop.getLegsContainer().id
+        });
+    player.container.legsContainer.left = player.container.legsContainer.append("path")
+        .attr({
+            id: prop.getLegs().left.id
+        });
+    player.container.legsContainer.right = player.container.legsContainer.append("path")
+        .attr({
+            id: prop.getLegs().right.id
+        });
 
-
-})(properties, actions);
+})(properties);
