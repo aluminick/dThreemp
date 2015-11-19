@@ -1,4 +1,4 @@
-var actions = (function() {
+var actions = (function(prop) {
     var running = false;
     var pathGenerator = d3.svg.line()
         .x(function(d) {return d.x})
@@ -78,8 +78,8 @@ var actions = (function() {
                     if(running === false){
                         return true;
                     }
-                    var backward= Math.random()*((-80 - -60)-1) + -60,
-                        forward= Math.random()*((80 - 60)+1) + 60;
+                    var backward= Math.random()*((-80 - -70)-1) + -70,
+                        forward= Math.random()*((80 - 70)+1) + 70;
 
                     player.container.headContainer
                         .transition()
@@ -142,9 +142,68 @@ var actions = (function() {
             } else {
                 if(running === true) {
                     running = false;
-                    console.log("stop");
+                    player.container.headContainer
+                        .transition()
+                        .attr({
+                            transform: prop.getHeadContainer().transform
+                        });
+
+                    //player body
+                    player.container.bodyContainer
+                        .transition()
+                        .attr({
+                            transform: prop.getBodyContainer().transform
+                        });
+                    player.container.bodyContainer.body
+                        .data([prop.getBody().d])
+                        .transition()
+                        .attr({
+                            d: pathGenerator
+                        });
+
+                    //player arms
+                    player.container.armsContainer
+                        .transition()
+                        .attr({
+                            transform: prop.getArmsContainer().transform
+                        });
+                    player.container.armsContainer.left
+                        .data([prop.getArms().left.d])
+                        .transition()
+                        .attr({
+                            d: pathGenerator,
+                            transform: "rotate(0)"
+                        });
+                    player.container.armsContainer.right
+                        .data([prop.getArms().right.d])
+                        .transition()
+                        .attr({
+                            d: pathGenerator,
+                            transform: "rotate(0)"
+                        });
+
+                    //player legs
+                    player.container.legsContainer
+                        .transition()
+                        .attr({
+                            transform: prop.getLegsContainer().transform
+                        });
+                    player.container.legsContainer.left
+                        .data([prop.getLegs().left.d])
+                        .transition()
+                        .attr({
+                            d: pathGenerator,
+                            transform: "rotate(0)"
+                        });
+                    player.container.legsContainer.right
+                        .data([prop.getLegs().right.d])
+                        .transition()
+                        .attr({
+                            d: pathGenerator,
+                            transform: "rotate(0)"
+                        });
                 }
             }
         }
     };
-})();
+})(properties);
