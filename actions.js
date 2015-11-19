@@ -144,6 +144,7 @@ var actions = (function(prop) {
                     running = false;
                     player.container.headContainer
                         .transition()
+                        .duration(100)
                         .attr({
                             transform: prop.getHeadContainer().transform
                         });
@@ -151,12 +152,14 @@ var actions = (function(prop) {
                     //player body
                     player.container.bodyContainer
                         .transition()
+                        .duration(100)
                         .attr({
                             transform: prop.getBodyContainer().transform
                         });
                     player.container.bodyContainer.body
                         .data([prop.getBody().d])
                         .transition()
+                        .duration(100)
                         .attr({
                             d: pathGenerator
                         });
@@ -164,12 +167,14 @@ var actions = (function(prop) {
                     //player arms
                     player.container.armsContainer
                         .transition()
+                        .duration(100)
                         .attr({
                             transform: prop.getArmsContainer().transform
                         });
                     player.container.armsContainer.left
                         .data([prop.getArms().left.d])
                         .transition()
+                        .duration(100)
                         .attr({
                             d: pathGenerator,
                             transform: "rotate(0)"
@@ -177,6 +182,7 @@ var actions = (function(prop) {
                     player.container.armsContainer.right
                         .data([prop.getArms().right.d])
                         .transition()
+                        .duration(100)
                         .attr({
                             d: pathGenerator,
                             transform: "rotate(0)"
@@ -185,12 +191,14 @@ var actions = (function(prop) {
                     //player legs
                     player.container.legsContainer
                         .transition()
+                        .duration(100)
                         .attr({
                             transform: prop.getLegsContainer().transform
                         });
                     player.container.legsContainer.left
                         .data([prop.getLegs().left.d])
                         .transition()
+                        .duration(100)
                         .attr({
                             d: pathGenerator,
                             transform: "rotate(0)"
@@ -198,6 +206,7 @@ var actions = (function(prop) {
                     player.container.legsContainer.right
                         .data([prop.getLegs().right.d])
                         .transition()
+                        .duration(100)
                         .attr({
                             d: pathGenerator,
                             transform: "rotate(0)"
