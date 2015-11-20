@@ -1,3 +1,7 @@
+/**
+ * Players actions
+ */
+
 var actions = (function(prop) {
     var running = false;
     var pathGenerator = d3.svg.line()
