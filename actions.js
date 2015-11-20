@@ -100,7 +100,7 @@ var actions = (function(prop) {
                         .transition()
                         .duration(300)
                         .attr({
-                            transform: "translate(74,33)"
+                            transform: "translate(74,340)"
                         })
                         .transition()
                         .attr({
