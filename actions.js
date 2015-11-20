@@ -92,8 +92,19 @@ var actions = (function(prop) {
                             transform: "translate(80, 324)"
                         })
                         .transition()
+                        .duration(300)
                         .attr({
                             transform: "translate(80, 323)"
+                        });
+                    player.container.armsContainer
+                        .transition()
+                        .duration(300)
+                        .attr({
+                            transform: "translate(74,33)"
+                        })
+                        .transition()
+                        .attr({
+                            transform: "translate(74,338)"
                         });
                     player.container.armsContainer.left
                         .transition()
