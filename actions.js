@@ -85,26 +85,15 @@ var actions = (function(prop) {
                     var backward= Math.random()*((-80 - -70)-1) + -70,
                         forward= Math.random()*((80 - 70)+1) + 70;
 
-                    player.container.headContainer
-                        .transition()
-                        .duration(300)
-                        .attr({
-                            transform: "translate(80, 324)"
-                        })
-                        .transition()
-                        .duration(300)
-                        .attr({
-                            transform: "translate(80, 323)"
-                        });
                     player.container.armsContainer
                         .transition()
                         .duration(300)
                         .attr({
-                            transform: "translate(74,340)"
+                            transform: "translate(74,337)"
                         })
                         .transition()
                         .attr({
-                            transform: "translate(74,338)"
+                            transform: "translate(74,335)"
                         });
                     player.container.armsContainer.left
                         .transition()

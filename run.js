@@ -23,7 +23,7 @@ var run = (function() {
 
     PLAYER_CONTAINER.legs = {
         ready: {
-            transform: "translate(65, 360)"
+            transform: "translate(65, 362)"
         }
     };
 

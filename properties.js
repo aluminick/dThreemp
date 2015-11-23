@@ -9,7 +9,20 @@ var properties = (function() {
 
     CANVAS.fontFamily = "\"Arial Black\", Gadget, sans-serif";
     CANVAS.fontSize = "15px";
-    CANVAS.fontColor = "#000000";
+    CANVAS.fontColor = "#16a085";
+
+    CANVAS.btn = {};
+    CANVAS.btn.fontFamily = "Impact, Charcoal, sans-serif";
+    CANVAS.btn.fontSize = "25px";
+    CANVAS.btn.width = 100;
+    CANVAS.btn.height = 40;
+
+    CANVAS.textSelect = {
+        "-webkit-user-select": "none",
+        "-moz-user-select": "none",
+        "-ms-user-select": "none",
+        "user-select": "none"
+    };
 
     var PLAYER_CONTAINER = {},
         PLAYER = {};
@@ -109,6 +122,12 @@ var properties = (function() {
         },
         getFontColor: function() {
             return CANVAS.fontColor;
+        },
+        getButton: function() {
+            return CANVAS.btn;
+        },
+        disableSelection: function() {
+            return CANVAS.textSelect;
         },
         getPlayerContainer: function() {
             return PLAYER_CONTAINER.player;
