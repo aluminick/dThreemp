@@ -7,6 +7,10 @@ var properties = (function() {
         id: "running-zone"
     };
 
+    CANVAS.fontFamily = "\"Arial Black\", Gadget, sans-serif";
+    CANVAS.fontSize = "15px";
+    CANVAS.fontColor = "#000000";
+
     var PLAYER_CONTAINER = {},
         PLAYER = {};
 
@@ -96,6 +100,15 @@ var properties = (function() {
         },
         getCanvasId: function() {
             return CANVAS.id;
+        },
+        getFontFamily: function() {
+            return CANVAS.fontFamily;
+        },
+        getFontSize: function() {
+            return CANVAS.fontSize;
+        },
+        getFontColor: function() {
+            return CANVAS.fontColor;
         },
         getPlayerContainer: function() {
             return PLAYER_CONTAINER.player;

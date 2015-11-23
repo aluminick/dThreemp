@@ -14,6 +14,26 @@
             id: prop.getCanvasId()
         });
 
+    var scoreLabel = canvas.append("text")
+        .attr({
+            x: 10,
+            y: 20,
+            "font-family": prop.getFontFamily(),
+            "font-size": prop.getFontSize(),
+            fill: prop.getFontColor()
+        })
+        .text("Score:");
+
+    var score = canvas.append("text")
+        .attr({
+            x: 55,
+            y: 20,
+            "font-family": prop.getFontFamily(),
+            "font-size": prop.getFontSize(),
+            fill: prop.getFontColor()
+        })
+        .text("0");
+
     var player = {};
     player.container = canvas.append("g")
         .attr({
