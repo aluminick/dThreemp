@@ -25,11 +25,11 @@
     /**
      * Ground
      */
-    var ground = canvas.append("rect")
+    canvas.append("rect")
         .attr({
             width: prop.getCanvasSize().width,
-            height: "10px",
-            fill: "#95a5a6",
+            height: prop.getGround().height,
+            fill: prop.getGround().color,
             y: prop.getCanvasSize().height - 10
         });
 
@@ -38,9 +38,8 @@
      */
     var btnPlayContainer = canvas.append("g")
         .attr({
-            id: "btn-play-container",
-            transform: "translate(" + (prop.getCanvasSize().width - 110) +", "+ (prop.getCanvasSize().height - 60) +")",
-            class: "btn-play"
+            id: prop.getButton().id.play,
+            transform: "translate(" + (prop.getCanvasSize().width - 110) +", "+ (prop.getCanvasSize().height - 60) +")"
         })
         .style({
             cursor: "pointer"
@@ -48,24 +47,21 @@
 
     btnPlayContainer.append("rect")
         .attr({
+            id: prop.getButtonRectId().play,
             width: prop.getButton().width,
             height: prop.getButton().height,
-            rx: 3,
-            ry: 3,
-            fill: "#3bd27a",
-            id: "btn-play-rect",
-            class: "btn-play"
+            rx: prop.getButton().borderRadius,
+            ry: prop.getButton().borderRadius,
+            fill: prop.getButton().color.play
         });
 
     btnPlayContainer.append("text")
         .attr({
-            x: 30,
+            x: 28,
             y: 30,
             "font-family": prop.getButton().fontFamily,
             "font-size": prop.getButton().fontSize,
-            fill: "#ffffff",
-            id: "btn-play-label",
-            class: "btn-play"
+            fill: prop.getButton().labelColor
         })
         .text("PLAY");
 
@@ -103,6 +99,27 @@
             "text-anchor": "middle"
         });
 
+    var startCountdown = function(ctr) {
+        countDown
+            .attr({
+                "font-size": "50px",
+                y: 220
+            })
+            .transition()
+            .duration(1000)
+            .attr({
+                "font-size": "0px",
+                y: 200
+            })
+            .text(ctr--)
+            .each("end", function() {
+                if(ctr > 0) {
+                    startCountdown(ctr);
+                } else {
+                    actions.run(player, true);
+                }
+            });
+    };
     /**
      * Player object
      */
@@ -216,12 +233,12 @@
     /**
      * button effects
      */
-    d3.select("#btn-play-container").on("mouseover", function() {
+    d3.select("#btn-play").on("mouseover", function() {
         d3.select("#btn-play-rect")
             .transition()
             .attr("fill", "#27ae60");
     });
-    d3.select("#btn-play-container").on("mouseout", function() {
+    d3.select("#btn-play").on("mouseout", function() {
         d3.select("#btn-play-rect")
             .transition()
             .attr("fill", "#3bd27a");
@@ -230,7 +247,7 @@
     /**
      * Start game trigger
      */
-    d3.select("#btn-play-container").on("click", function() {
+    d3.select("#btn-play").on("click", function() {
         d3.select(this)
             .transition()
             .style({
@@ -238,27 +255,6 @@
             })
             .each("end", function() {
                 var ctrStart = 3;
-                function startCountdown(ctr) {
-                    countDown
-                        .attr({
-                            "font-size": "50px",
-                            y: 220
-                        })
-                        .transition()
-                        .duration(1000)
-                        .attr({
-                            "font-size": "0px",
-                            y: 200
-                        })
-                        .text(ctr--)
-                        .each("end", function() {
-                            if(ctr > 0) {
-                                startCountdown(ctr);
-                            } else {
-                                actions.run(player, true);
-                            }
-                        });
-                }
                 startCountdown(ctrStart);
             });
     });

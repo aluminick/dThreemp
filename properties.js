@@ -9,13 +9,30 @@ var properties = (function() {
 
     CANVAS.fontFamily = "\"Arial Black\", Gadget, sans-serif";
     CANVAS.fontSize = "15px";
-    CANVAS.fontColor = "#16a085";
+    CANVAS.fontColor = "#000000";
 
     CANVAS.btn = {};
     CANVAS.btn.fontFamily = "Impact, Charcoal, sans-serif";
     CANVAS.btn.fontSize = "25px";
     CANVAS.btn.width = 100;
     CANVAS.btn.height = 40;
+    CANVAS.btn.borderRadius = 3;
+    CANVAS.btn.labelColor = "#ffffff";
+    CANVAS.btn.color = {
+        play: "#3bd27a"
+    };
+    CANVAS.btn.id = {
+        play: "btn-play"
+    };
+    CANVAS.btn.rect = {
+        id: {
+            play: "btn-play.rect"
+        }
+    };
+
+    CANVAS.ground = {};
+    CANVAS.ground.height = "10px";
+    CANVAS.ground.color = "#ecf0f1";
 
     CANVAS.textSelect = {
         "-webkit-user-select": "none",
@@ -53,7 +70,7 @@ var properties = (function() {
     /**
      * player parts properties
      */
-    PLAYER.color = "#a66bbe";
+    PLAYER.color = "#7f8c8d";//#a66bbe
     PLAYER.fill = "none";
     PLAYER.width = 7;
     PLAYER.lineCap = "round";
@@ -123,8 +140,14 @@ var properties = (function() {
         getFontColor: function() {
             return CANVAS.fontColor;
         },
+        getGround: function() {
+            return CANVAS.ground;
+        },
         getButton: function() {
             return CANVAS.btn;
+        },
+        getButtonRectId: function() {
+            return CANVAS.btn.rect.id;
         },
         disableSelection: function() {
             return CANVAS.textSelect;
