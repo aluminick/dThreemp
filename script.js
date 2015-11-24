@@ -241,7 +241,10 @@
     d3.select("#btn-play").on("mouseout", function() {
         d3.select("#btn-play-rect")
             .transition()
-            .attr("fill", "#3bd27a");
+            .attr("fill", "#3bd27a")
+            .each("end", function() {
+                console.log("awww");
+            });
     });
 
     /**

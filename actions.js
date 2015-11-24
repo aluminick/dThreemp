@@ -217,6 +217,9 @@ var actions = (function(prop) {
                         });
                 }
             }
+        },
+        spawn: function() {
+
         }
     };
 })(properties);

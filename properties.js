@@ -26,7 +26,7 @@ var properties = (function() {
     };
     CANVAS.btn.rect = {
         id: {
-            play: "btn-play.rect"
+            play: "btn-play-rect"
         }
     };
 
